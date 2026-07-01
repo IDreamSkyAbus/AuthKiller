@@ -1,0 +1,68 @@
+{
+  "common": {
+    "app_name": "AuthKiller",
+    "app_description": "Password Testing Tool (For Authorized Security Audits Only)",
+    "warning": "WARNING: This tool is for authorized security testing only!",
+    "warning_legal": "Unauthorized use may violate laws!",
+    "system_ready": "System Ready",
+    "system_idle": "System Idle",
+    "success": "Success",
+    "failed": "Failed",
+    "error": "Error",
+    "warning_title": "Warning",
+    "info": "Info",
+    "confirm": "Confirm",
+    "cancel": "Cancel",
+    "start": "Start",
+    "stop": "Stop",
+    "pause": "Pause",
+    "resume": "Resume"
+  },
+  "cli": {
+    "title": "AuthKiller - Password Testing Tool",
+    "description": "AuthKiller - Password Testing Tool (For Authorized Security Audits Only)",
+    "warning_footer": "WARNING: This tool is for authorized security testing only! Unauthorized use may violate laws!",
+    "msg_config_loaded": "Configuration file loaded: {path}",
+    "msg_config_validated": "Configuration validation passed",
+    "msg_attack_start": "Starting attack task...",
+    "msg_attack_complete": "Task completion statistics:",
+    "msg_results_saved": "Results saved to: {path}",
+    "error_missing_params": "Missing required parameters: --url, --users, --passwords"
+  },
+  "web": {
+    "title": "AuthKiller - Password Testing Tool Web Interface",
+    "logo": "AuthKiller Web GUI",
+    "nav_control_panel": "Control Panel",
+    "status_ready": "System Ready",
+    "status_running": "Testing in Progress",
+    "status_paused": "Task Paused",
+    "btn_start_test": "Start Test",
+    "btn_pause": "Pause",
+    "btn_stop": "Stop",
+    "btn_resume": "Resume"
+  },
+  "api": {
+    "error_empty_config_path": "Configuration file path cannot be empty",
+    "error_config_not_found": "Configuration file not found",
+    "error_task_already_running": "Task is already running",
+    "msg_task_started": "Task started",
+    "msg_task_stopped": "Task stopped"
+  },
+  "gui": {
+    "title": "AuthKiller - THINKER GUI",
+    "window_title": "AuthKiller Password Testing Tool",
+    "menu_file": "File",
+    "menu_help": "Help",
+    "status_ready": "Ready",
+    "status_running": "Running",
+    "status_paused": "Paused",
+    "msg_task_started": "Task started",
+    "msg_task_completed": "Task completed"
+  },
+  "log": {
+    "msg_credential_found": "✅ Credential found! Username: {username}, Password: {password}",
+    "msg_attack_start": "Starting attack test",
+    "msg_attack_complete": "Attack test completed",
+    "msg_config_load": "Loading configuration: {path}"
+  }
+}
