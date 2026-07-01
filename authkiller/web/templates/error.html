@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>错误 - AuthKiller Web界面</title>
+
+    <!-- LayUI CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/layui@2.8.0/dist/css/layui.css">
+</head>
+<body class="layui-bg-gray">
+
+<div class="layui-container" style="margin-top: 100px;">
+    <div class="layui-card">
+        <div class="layui-card-header">
+            <i class="layui-icon layui-icon-close-fill" style="color: #FF5722;"></i> 错误
+        </div>
+        <div class="layui-card-body" style="text-align: center;">
+            <h2 style="color: #FF5722;">{{ error }}</h2>
+            <div style="margin-top: 30px;">
+                <button type="button" class="layui-btn layui-btn-normal"
+                        onclick="location.href='/';">
+                    <i class="layui-icon layui-icon-return"></i> 返回首页
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
