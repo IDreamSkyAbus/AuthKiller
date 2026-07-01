@@ -1,0 +1,87 @@
+# AuthKiller 配置文件示例 (YAML 格式)
+# 支持所有配置选项，更加易读
+
+# 通用配置
+general:
+  language: zh-CN  # 语言选择：zh-CN, en-US, ja-JP, ko-KR
+  mode: cli  # 运行模式：cli, web_gui, thinker_gui, api_service
+  debug: false  # 调试模式
+  quiet: false  # 安静模式（减少输出）
+
+# 目标配置
+target:
+  url: http://example.com/login
+  method: POST
+  headers:
+    User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36
+    Content-Type: application/x-www-form-urlencoded
+    Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+    Accept-Language: zh-CN,zh;q=0.9,en;q=0.8
+  body_template: username={user}&password={pass}&submit=Login
+  content_type: urlencoded
+  cookies: {}
+
+# 字典配置
+payload:
+  users_file: examples/dictionaries/usernames.txt
+  passwords_file: examples/dictionaries/passwords.txt
+  rules:
+    - uppercase
+    - lowercase
+    - capitalize
+  mode: normal  # normal, single_user, single_password
+
+# 性能配置
+performance:
+  concurrency: 10
+  timeout: 10
+  retry_times: 3
+  checkpoint_interval: 100
+
+# 检测配置
+detection:
+  success_status_codes:
+    - 200
+    - 302
+    - 301
+  success_pattern: "Welcome|成功|登录成功|Dashboard|主页|欢迎"
+  failure_pattern: "Invalid|错误|失败|Incorrect|Wrong|Error|Invalid username or password"
+  protocol: http_form  # http_form, http_basic
+
+# 防御配置
+defense:
+  detect_rate_limit: true
+  auto_throttle: true
+  throttle_delay: 5
+  max_rate_limit_retries: 3
+
+# 输出配置
+output:
+  log_level: INFO  # DEBUG, INFO, WARNING, ERROR, CRITICAL
+  log_file: authkiller.log
+  result_file: results.json
+  checkpoint_dir: checkpoints
+
+# API 服务配置（仅在 mode=api_service 时使用）
+api:
+  host: 0.0.0.0
+  port: 8080
+  enable_auth: true
+  auth_token: your-secret-token-here
+  cors_origins:
+    - "*"
+
+# Web GUI 配置（仅在 mode=web_gui 时使用）
+web_gui:
+  host: 0.0.0.0
+  port: 5000
+  secret_key: your-secret-key-here-change-in-production
+  session_timeout: 3600
+
+# THINKER GUI 配置（仅在 mode=thinker_gui 时使用）
+thinker_gui:
+  theme: dark  # dark, light
+  window_size:
+    - 1200
+    - 800
+  auto_save_interval: 300
