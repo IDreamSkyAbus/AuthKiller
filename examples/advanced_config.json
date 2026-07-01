@@ -1,0 +1,62 @@
+{
+  "target": {
+    "url": "http://advanced.example.com/login",
+    "method": "POST",
+    "headers": {
+      "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
+      "Accept": "application/json, text/plain, */*",
+      "Accept-Language": "zh-CN,zh;q=0.9,en;q=0.8",
+      "Accept-Encoding": "gzip, deflate, br",
+      "Connection": "keep-alive",
+      "Referer": "http://advanced.example.com/",
+      "X-Requested-With": "XMLHttpRequest",
+      "Origin": "http://advanced.example.com",
+      "Cache-Control": "no-cache",
+      "Pragma": "no-cache"
+    },
+    "cookies": {
+      "session_id": "abc123def456",
+      "tracking_id": "xyz789",
+      "language": "zh-CN"
+    },
+    "body_template": "username={user}&password={pass}&remember_me=true&csrf_token={token}&redirect=/dashboard",
+    "content_type": "urlencoded"
+  },
+  "payload": {
+    "users_file": "examples/dictionaries/usernames.txt",
+    "passwords_file": "examples/dictionaries/passwords.txt",
+    "rules": [
+      "uppercase",
+      "lowercase",
+      "capitalize",
+      "append_numbers",
+      "append_special",
+      "leet"
+    ],
+    "mode": "normal"
+  },
+  "performance": {
+    "concurrency": 50,
+    "timeout": 15,
+    "retry_times": 5,
+    "checkpoint_interval": 50
+  },
+  "detection": {
+    "success_status_codes": [200, 201, 302, 301],
+    "success_pattern": "Welcome|成功|Dashboard|欢迎|Success|Logged in|登录成功|认证成功|Authentication successful",
+    "failure_pattern": "Invalid|错误|Failed|Incorrect|Wrong|Error|Invalid username or password|认证失败|用户名或密码错误|Access denied",
+    "protocol": "http_form"
+  },
+  "defense": {
+    "detect_rate_limit": true,
+    "auto_throttle": true,
+    "throttle_delay": 10,
+    "max_rate_limit_retries": 5
+  },
+  "output": {
+    "log_level": "DEBUG",
+    "log_file": "advanced_authkiller.log",
+    "result_file": "advanced_results.json",
+    "checkpoint_dir": "advanced_checkpoints"
+  }
+}
