@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="{{ current_lang }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ strings.title }}</title>
+
+    <!-- LayUI CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/layui@2.8.0/dist/css/layui.css">
+
+    <!-- 自定义样式 -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    
+    <!-- Favicon - 使用LayUI图标 -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔐</text></svg>">
+</head>
+<body class="layui-layout-body">
+
+<!-- 整体布局 -->
+<div class="layui-layout layui-layout-admin">
+
+<!-- 顶部导航 -->
+<div class="layui-header">
+    <div class="layui-logo">
+        <i class="layui-icon layui-icon-password"></i> AuthKiller
+    </div>
+    
+    <!-- 左侧菜单 -->
+    <ul class="layui-nav layui-layout-left">
+        <li class="layui-nav-item">
+            <a href="javascript:;" data-page="home">首页</a>
+        </li>
+        <li class="layui-nav-item">
+            <a href="javascript:;">测试任务</a>
+            <dl class="layui-nav-child">
+                <dd><a href="javascript:;" data-page="new-task">新建任务</a></dd>
+                <dd><a href="javascript:;" data-page="history">历史记录</a></dd>
+                <dd><a href="javascript:;" data-page="templates">任务模板</a></dd>
+            </dl>
+        </li>
+        <li class="layui-nav-item">
+            <a href="javascript:;">字典管理</a>
+            <dl class="layui-nav-child">
+                <dd><a href="javascript:;" data-page="user-dict">用户字典</a></dd>
+                <dd><a href="javascript:;" data-page="pass-dict">密码字典</a></dd>
+                <dd><a href="javascript:;" data-page="rules">变异规则</a></dd>
+            </dl>
+        </li>
+        <li class="layui-nav-item">
+            <a href="javascript:;">结果分析</a>
+            <dl class="layui-nav-child">
+                <dd><a href="javascript:;" data-page="results">测试结果</a></dd>
+                <dd><a href="javascript:;" data-page="reports">统计报告</a></dd>
+                <dd><a href="javascript:;" data-page="export">数据导出</a></dd>
+            </dl>
+        </li>
+        <li class="layui-nav-item">
+            <a href="javascript:;">系统设置</a>
+            <dl class="layui-nav-child">
+                <dd><a href="javascript:;" data-page="config">配置管理</a></dd>
+                <dd><a href="javascript:;" data-page="logs">系统日志</a></dd>
+                <dd><a href="javascript:;" data-page="about">关于工具</a></dd>
+            </dl>
+        </li>
+    </ul>
+    
+    <!-- 右侧工具栏 -->
+    <ul class="layui-nav layui-layout-right">
+        <li class="layui-nav-item">
+            <a href="javascript:;" id="language-selector" style="padding: 0 20px;">
+                <i class="layui-icon layui-icon-language"></i>
+                <span style="margin-left: 5px;">{{ current_lang }}</span>
+            </a>
+            <dl class="layui-nav-child">
+                <dd><a href="javascript:;" data-lang="zh-CN">中文</a></dd>
+                <dd><a href="javascript:;" data-lang="en-US">English</a></dd>
+                <dd><a href="javascript:;" data-lang="ja-JP">日本語</a></dd>
+            </dl>
+        </li>
+        <li class="layui-nav-item">
+            <a href="javascript:;">
+                <i class="layui-icon layui-icon-notice"></i>
+                <span id="system-status-badge" class="layui-badge-dot"></span>
+            </a>
+        </li>
+        <li class="layui-nav-item">
+            <a href="javascript:;">
+                <i class="layui-icon layui-icon-username"></i>
+                <span id="system-status">{{ strings.system_ready }}</span>
+            </a>
+        </li>
+    </ul>
+</div>
+
+<!-- 主体内容区域 -->
+<div class="layui-body">
+    <div class="layui-container" style="padding: 15px;">
+
+        <!-- Tab标签页 -->
+        <div class="layui-tab layui-tab-card" lay-filter="main-tab" lay-allowclose="true" style="margin: 0;">
+            <ul class="layui-tab-title">
+                <li class="layui-this" lay-id="home"><i class="layui-icon layui-icon-home"></i> 首页</li>
+            </ul>
+            <div class="layui-tab-content">
+
+                <!-- 首页 - 配置和控制面板 -->
+                <div class="layui-tab-item layui-show">
+                    <div class="layui-row layui-col-space15">
+
+                        <!-- 配置面板 -->
+                        <div class="layui-col-md6">
+                            <div class="layui-card">
+                                <div class="layui-card-header">
+                                    <i class="layui-icon layui-icon-set"></i> {{ strings.test_config }}
+                                </div>
+                                <div class="layui-card-body">
+
+                                    <form class="layui-form" id="config-form" lay-filter="configForm">
+
+                                        <!-- 目标配置 -->
+                                        <div class="layui-form-item">
+                                            <label class="layui-form-label">{{ strings.target_url }}</label>
+                                            <div class="layui-input-block">
+                                                <input type="text" name="target_url" id="target_url"
+                                                       placeholder="{{ strings.placeholder_target_url }}"
+                                                       class="layui-input" lay-verify="required">
+                                            </div>
+                                        </div>
+
+                                        <!-- 协议类型 -->
+                                        <div class="layui-form-item">
+                                            <label class="layui-form-label">{{ strings.protocol_type }}</label>
+                                            <div class="layui-input-block">
+                                                <select name="protocol_type" lay-filter="protocol" lay-verify="required">
+                                                    <option value="http_form">{{ strings.protocol_http_form }}</option>
+                                                    <option value="http_basic">{{ strings.protocol_http_basic }}</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <!-- 字典配置 -->
+                                        <div class="layui-form-item">
+                                            <label class="layui-form-label">{{ strings.users_dict }}</label>
+                                            <div class="layui-input-block">
+                                                <input type="text" name="users_file" id="users_file"
+                                                       placeholder="{{ strings.placeholder_users_file }}"
+                                                       class="layui-input" lay-verify="required">
+                                            </div>
+                                        </div>
+
+                                        <div class="layui-form-item">
+                                            <label class="layui-form-label">{{ strings.passwords_dict }}</label>
+                                            <div class="layui-input-block">
+                                                <input type="text" name="passwords_file" id="passwords_file"
+                                                       placeholder="{{ strings.placeholder_passwords_file }}"
+                                                       class="layui-input" lay-verify="required">
+                                            </div>
+                                        </div>
+
+                                        <!-- 并发配置 -->
+                                        <div class="layui-form-item">
+                                            <label class="layui-form-label">{{ strings.concurrency }}</label>
+                                            <div class="layui-input-inline" style="width: 120px;">
+                                                <input type="number" name="concurrency"
+                                                       value="10" min="1" max="100"
+                                                       class="layui-input" lay-verify="number">
+                                            </div>
+                                            <div class="layui-form-mid layui-word-aux">1-100</div>
+                                        </div>
+
+                                        <div class="layui-form-item">
+                                            <label class="layui-form-label">{{ strings.timeout }}</label>
+                                            <div class="layui-input-inline" style="width: 120px;">
+                                                <input type="number" name="timeout"
+                                                       value="30" min="5" max="120"
+                                                       class="layui-input" lay-verify="number">
+                                            </div>
+                                            <div class="layui-form-mid layui-word-aux">5-120秒</div>
+                                        </div>
+
+                                        <!-- HTTP表单专用配置 -->
+                                        <div id="http-form-config">
+                                            <div class="layui-form-item">
+                                                <label class="layui-form-label">{{ strings.user_field }}</label>
+                                                <div class="layui-input-block">
+                                                    <input type="text" name="username_field"
+                                                           value="username" class="layui-input">
+                                                </div>
+                                            </div>
+
+                                            <div class="layui-form-item">
+                                                <label class="layui-form-label">{{ strings.pass_field }}</label>
+                                                <div class="layui-input-block">
+                                                    <input type="text" name="password_field"
+                                                           value="password" class="layui-input">
+                                                </div>
+                                            </div>
+
+                                            <div class="layui-form-item">
+                                                <label class="layui-form-label">{{ strings.success_pattern }}</label>
+                                                <div class="layui-input-block">
+                                                    <input type="text" name="success_pattern" id="success_pattern"
+                                                           placeholder="{{ strings.placeholder_success_pattern }}"
+                                                           class="layui-input">
+                                                </div>
+                                            </div>
+
+                                            <div class="layui-form-item">
+                                                <label class="layui-form-label">{{ strings.failure_pattern }}</label>
+                                                <div class="layui-input-block">
+                                                    <input type="text" name="failure_pattern" id="failure_pattern"
+                                                           placeholder="{{ strings.placeholder_failure_pattern }}"
+                                                           class="layui-input">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- 操作按钮 -->
+                                        <div class="layui-form-item">
+                                            <div class="layui-input-block">
+                                                <button type="button" class="layui-btn layui-btn-primary" id="btn-load-config">
+                                                    <i class="layui-icon layui-icon-upload"></i> {{ strings.load_config }}
+                                                </button>
+                                                <button type="button" class="layui-btn layui-btn-normal" id="btn-save-config">
+                                                    <i class="layui-icon layui-icon-download-circle"></i> {{ strings.save_config }}
+                                                </button>
+                                            </div>
+                                        </div>
+
+                                    </form>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 控制面板 -->
+                        <div class="layui-col-md6">
+                            <div class="layui-card">
+                                <div class="layui-card-header">
+                                    <i class="layui-icon layui-icon-engine"></i> {{ strings.task_control }}
+                                </div>
+                                <div class="layui-card-body">
+
+                                    <!-- 操作按钮 -->
+                                    <div class="layui-btn-container" style="margin-bottom: 15px;">
+                                        <button type="button" class="layui-btn layui-btn-normal" id="btn-start">
+                                            <i class="layui-icon layui-icon-play"></i> {{ strings.start_test }}
+                                        </button>
+                                        <button type="button" class="layui-btn layui-btn-warm" id="btn-pause" disabled>
+                                            <i class="layui-icon layui-icon-pause"></i> {{ strings.pause }}
+                                        </button>
+                                        <button type="button" class="layui-btn layui-btn-danger" id="btn-stop" disabled>
+                                            <i class="layui-icon layui-icon-close"></i> {{ strings.stop }}
+                                        </button>
+                                        <button type="button" class="layui-btn layui-btn-primary" id="btn-resume" disabled>
+                                            <i class="layui-icon layui-icon-refresh"></i> {{ strings.resume }}
+                                        </button>
+                                    </div>
+
+                                    <!-- 进度信息 -->
+                                    <div id="progress-panel" style="display: none;">
+                                        <div class="layui-progress layui-progress-big" lay-showpercent="true" lay-filter="test-progress">
+                                            <div class="layui-progress-bar" lay-percent="0%"></div>
+                                        </div>
+
+                                        <div class="layui-row layui-col-space15" style="margin-top: 15px;">
+                                            <div class="layui-col-xs3">
+                                                <div class="layui-card layui-card-number">
+                                                    <div class="layui-card-header">{{ strings.total_combinations }}</div>
+                                                    <div class="layui-card-body" id="stat-total">0</div>
+                                                </div>
+                                            </div>
+                                            <div class="layui-col-xs3">
+                                                <div class="layui-card layui-card-number">
+                                                    <div class="layui-card-header">{{ strings.tested }}</div>
+                                                    <div class="layui-card-body" id="stat-tested">0</div>
+                                                </div>
+                                            </div>
+                                            <div class="layui-col-xs3">
+                                                <div class="layui-card layui-card-number layui-bg-green">
+                                                    <div class="layui-card-header">{{ strings.success }}</div>
+                                                    <div class="layui-card-body" id="stat-success">0</div>
+                                                </div>
+                                            </div>
+                                            <div class="layui-col-xs3">
+                                                <div class="layui-card layui-card-number layui-bg-red">
+                                                    <div class="layui-card-header">{{ strings.failed }}</div>
+                                                    <div class="layui-card-body" id="stat-failed">0</div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- 时间信息 -->
+                                        <div style="margin-top: 10px;">
+                                            <p><i class="layui-icon layui-icon-time"></i> {{ strings.start_time }}: <span id="start-time">-</span></p>
+                                            <p><i class="layui-icon layui-icon-time"></i> {{ strings.estimated_time }}: <span id="estimated-time">-</span></p>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <!-- 实时日志 -->
+                            <div class="layui-card" style="margin-top: 15px;">
+                                <div class="layui-card-header">
+                                    <i class="layui-icon layui-icon-log"></i> {{ strings.realtime_log }}
+                                </div>
+                                <div class="layui-card-body" style="height: 200px; overflow-y: auto;">
+                                    <div id="log-container" style="font-size: 12px; font-family: monospace;">
+                                        <p style="color: #999;">{{ strings.system_ready }}，{{ strings.waiting_start }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- 结果表格 -->
+                    <div class="layui-row" style="margin-top: 15px;">
+                        <div class="layui-card">
+                            <div class="layui-card-header">
+                                <i class="layui-icon layui-icon-table"></i> {{ strings.test_results }}
+                                <span class="layui-badge layui-bg-blue" id="result-count">0</span>
+                                <button type="button" class="layui-btn layui-btn-sm layui-btn-normal" id="btn-export" style="float: right;">
+                                    <i class="layui-icon layui-icon-download-circle"></i> {{ strings.export_results }}
+                                </button>
+                            </div>
+                            <div class="layui-card-body">
+                                <table id="result-table" lay-filter="result-table"></table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+</div>
+
+<!-- LayUI JS -->
+<script src="https://cdn.jsdelivr.net/npm/layui@2.8.0/dist/layui.js"></script>
+
+<!-- 自定义JS -->
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+
+</body>
+</html>
