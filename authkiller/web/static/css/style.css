@@ -1,0 +1,292 @@
+/**
+ * AuthKiller Web GUI - layuiadmin风格样式
+ */
+
+/* 整体布局 */
+.layui-layout-admin .layui-header {
+    background-color: #20222A;
+    border-bottom: 1px solid #1AA094;
+}
+
+.layui-layout-admin .layui-logo {
+    background-color: #20222A;
+    color: #fff;
+    font-size: 18px;
+    line-height: 60px;
+    text-align: center;
+    width: 200px;
+}
+
+.layui-layout-admin .layui-logo i {
+    margin-right: 8px;
+    font-size: 20px;
+}
+
+/* 主体内容区域 */
+.layui-layout-admin .layui-body {
+    top: 60px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #F2F2F2;
+    overflow-y: auto;
+}
+
+/* 导航菜单样式 */
+.layui-nav {
+    background-color: #20222A;
+}
+
+.layui-nav .layui-nav-item a {
+    color: #c2c2c2;
+}
+
+.layui-nav .layui-nav-item a:hover,
+.layui-nav .layui-this a {
+    color: #fff;
+    background-color: #1AA094;
+}
+
+.layui-nav-child {
+    background-color: #333;
+    border: 1px solid #1AA094;
+}
+
+.layui-nav-child dd a {
+    color: #c2c2c2;
+}
+
+.layui-nav-child dd a:hover {
+    color: #1AA094;
+    background-color: #20222A;
+}
+
+/* 卡片样式 */
+.layui-card {
+    border-radius: 4px;
+    box-shadow: 0 1px 2px 0 rgba(0,0,0,.1);
+    border: 1px solid #e6e6e6;
+}
+
+.layui-card-header {
+    height: 42px;
+    line-height: 42px;
+    padding: 0 15px;
+    border-bottom: 1px solid #e6e6e6;
+    color: #333;
+    font-weight: 600;
+    background-color: #f8f8f8;
+}
+
+.layui-card-header i {
+    margin-right: 8px;
+    color: #1AA094;
+}
+
+.layui-card-body {
+    padding: 15px;
+    background-color: #fff;
+}
+
+/* 数字卡片样式 */
+.layui-card-number {
+    border: none;
+    background-color: #f8f8f8;
+    text-align: center;
+}
+
+.layui-card-number .layui-card-header {
+    border-bottom: none;
+    font-size: 12px;
+    color: #666;
+    padding: 10px 0;
+    height: auto;
+    line-height: 1;
+    background-color: transparent;
+}
+
+.layui-card-number .layui-card-body {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    padding: 15px 10px;
+    background-color: transparent;
+}
+
+.layui-card-number.layui-bg-green .layui-card-body {
+    color: #fff;
+}
+
+.layui-card-number.layui-bg-red .layui-card-body {
+    color: #fff;
+}
+
+/* 表单样式 */
+.layui-form-label {
+    width: 110px;
+    text-align: right;
+    padding-right: 10px;
+}
+
+.layui-input-block {
+    margin-left: 130px;
+}
+
+.layui-form-item .layui-input-inline {
+    margin-left: 130px;
+}
+
+.layui-word-aux {
+    color: #999;
+    font-size: 12px;
+}
+
+/* 进度条 */
+.layui-progress-big {
+    height: 24px;
+    border-radius: 12px;
+    background-color: #e6e6e6;
+}
+
+.layui-progress-bar {
+    border-radius: 12px;
+    background: linear-gradient(90deg, #1AA094 0%, #009688 100%);
+}
+
+/* 按钮样式 */
+.layui-btn {
+    border-radius: 4px;
+}
+
+.layui-btn-container {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.layui-btn-normal {
+    background-color: #1AA094;
+}
+
+.layui-btn-normal:hover {
+    background-color: #009688;
+}
+
+.layui-btn-disabled {
+    opacity: 0.5;
+    cursor: not-allowed !important;
+}
+
+/* 表格样式 */
+.layui-table-view {
+    margin-top: 0;
+    border-radius: 4px;
+}
+
+.layui-table-cell {
+    font-size: 13px;
+    height: 28px;
+    line-height: 28px;
+}
+
+.layui-table th {
+    background-color: #f2f2f2;
+    font-weight: 600;
+}
+
+/* 日志容器 */
+#log-container {
+    background-color: #fff;
+    border: 1px solid #e6e6e6;
+    border-radius: 4px;
+    padding: 10px;
+}
+
+#log-container p {
+    margin: 5px 0;
+    padding: 3px 5px;
+    border-radius: 2px;
+    line-height: 1.5;
+}
+
+#log-container p.info {
+    background-color: #f8f8f8;
+    color: #666;
+}
+
+#log-container p.success {
+    background-color: #e8f5e9;
+    color: #1AA094;
+}
+
+#log-container p.error {
+    background-color: #ffebee;
+    color: #FF5722;
+}
+
+#log-container p.warning {
+    background-color: #fff3e0;
+    color: #FFB800;
+}
+
+/* Badge样式 */
+.layui-badge-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: #1AA094;
+    position: absolute;
+    top: 8px;
+    right: 8px;
+}
+
+.layui-badge {
+    font-size: 12px;
+    padding: 2px 8px;
+    border-radius: 2px;
+}
+
+/* 头像样式 */
+.layui-nav-img {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin-right: 8px;
+}
+
+/* 响应式调整 */
+@media screen and (max-width: 768px) {
+    .layui-layout-admin .layui-logo {
+        width: 150px;
+    }
+    
+    .layui-card-number .layui-card-body {
+        font-size: 18px;
+    }
+    
+    .layui-form-label {
+        width: 90px;
+    }
+    
+    .layui-input-block {
+        margin-left: 110px;
+    }
+}
+
+/* 动画效果 */
+.layui-card {
+    transition: box-shadow 0.3s ease;
+}
+
+.layui-card:hover {
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,.15);
+}
+
+.layui-btn {
+    transition: all 0.3s ease;
+}
+
+.layui-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,.2);
+}
