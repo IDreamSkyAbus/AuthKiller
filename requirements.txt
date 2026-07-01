@@ -1,0 +1,10 @@
+# AuthKiller - 密码测试工具核心依赖
+# 仅用于授权安全审计和强度测试
+
+aiohttp>=3.9.0           # 异步 HTTP 客户端
+aiofiles>=23.2.0         # 异步文件操作
+tqdm>=4.66.0             # 进度条
+colorama>=0.4.6          # 终端彩色输出
+pyyaml>=6.0              # YAML 配置文件支持
+flask>=2.3.0             # Web GUI框架
+flask-cors>=4.0.0        # Flask CORS支持
